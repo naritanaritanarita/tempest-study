@@ -60,7 +60,7 @@ final readonly class TodoController
         $title = trim($request->get('title', ''));
         $description = trim($request->get('description', ''));
 
-        if (!empty($title)) {
+        if ($title !== '') {
             $this->todoService->update($id, $title, $description);
         }
 
