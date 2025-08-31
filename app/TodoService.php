@@ -8,11 +8,11 @@ use Tempest\Http\Session\Session;
 
 class TodoService
 {
-    private const SESSION_KEY = 'todos';
-    private const NEXT_ID_KEY = 'next_todo_id';
+    private const string SESSION_KEY = 'todos';
+    private const string NEXT_ID_KEY = 'next_todo_id';
 
     public function __construct(
-        private Session $session,
+        private readonly Session $session,
     ) {
     }
 
