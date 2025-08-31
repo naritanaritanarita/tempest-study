@@ -32,8 +32,8 @@ final readonly class TodoController
         $title = trim($request->get('title', ''));
         $description = trim($request->get('description', ''));
 
-        if (!empty($title)) {
-            $todo = $this->todoService->add($title, $description);
+        if ($title !== '') {
+            $this->todoService->add($title, $description);
         }
 
         return new Redirect('/todos');

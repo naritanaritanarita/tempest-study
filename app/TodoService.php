@@ -16,7 +16,7 @@ class TodoService
     ) {
     }
 
-    public function add(string $title, string $description = ''): Todo
+    public function add(string $title, string $description = ''): Void
     {
         $todos = $this->getTodos();
         $nextId = $this->getNextId();
@@ -30,8 +30,6 @@ class TodoService
         $todos[$todo->id] = $todo;
         $this->saveTodos($todos);
         $this->setNextId($nextId + 1);
-
-        return $todo;
     }
 
     public function getAll(): array
