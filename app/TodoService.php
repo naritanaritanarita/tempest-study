@@ -31,15 +31,12 @@ class TodoService
         $this->saveTodos($todos);
         $this->setNextId($nextId + 1);
 
-        error_log("TodoService::add() - Added todo with ID: " . $todo->id);
-
         return $todo;
     }
 
     public function getAll(): array
     {
         $todos = array_values($this->getTodos());
-        error_log("TodoService::getAll() - Returning " . count($todos) . " todos");
         return $todos;
     }
 
@@ -72,20 +69,13 @@ class TodoService
     private function getTodos(): array
     {
         $sessionData = $this->session->get(self::SESSION_KEY, []);
-        error_log("getTodos() - Session data type: " . gettype($sessionData));
-        error_log("getTodos() - Session data count: " . count($sessionData));
-        error_log("getTodos() - Session data: " . json_encode($sessionData));
 
         $todos = [];
 
         foreach ($sessionData as $key => $todoData) {
-            error_log("Processing item $key - type: " . gettype($todoData));
-
             if ($todoData instanceof Todo) {
-                error_log("Item $key is Todo object with ID: " . $todoData->id);
                 $todos[$todoData->id] = $todoData;
             } elseif (is_array($todoData)) {
-                error_log("Item $key is array with ID: " . ($todoData['id'] ?? 'unknown'));
                 $todos[$todoData['id']] = new Todo(
                     id: $todoData['id'],
                     title: $todoData['title'],
@@ -98,7 +88,6 @@ class TodoService
             }
         }
 
-        error_log("getTodos() - Returning " . count($todos) . " todos");
         return $todos;
     }
 
@@ -114,9 +103,6 @@ class TodoService
                 'createdAt' => $todo->createdAt->format('Y-m-d H:i:s')
             ];
         }
-
-        error_log("saveTodos() - Saving " . count($todoData) . " todos to session");
-        error_log("saveTodos() - Data: " . json_encode($todoData));
 
         $this->session->set(self::SESSION_KEY, $todoData);
     }
